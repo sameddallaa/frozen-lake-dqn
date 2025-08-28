@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class DQN(nn.Module):
-    def __init__(self, state_size, action_size, hidden_size=64, learning_rate=0.001, device=device):
+    def __init__(self, state_size, action_size, device, hidden_size=64):
         super(DQN, self).__init__()
         self.fc1 = nn.Linear(state_size, hidden_size).to(device)
         self.fc2 = nn.Linear(hidden_size, hidden_size).to(device)
