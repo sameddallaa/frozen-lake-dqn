@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
 
 class DQN(nn.Module):
     def __init__(self, state_size, action_size, hidden_size=64, learning_rate=0.001, device=device):
