@@ -117,3 +117,22 @@ class FrozenLakeDQN:
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
+    def demo(self, path='demo/', is_slippery=False):
+        env = gym.make("FrozenLake-v1", is_slippery=is_slippery, render_mode='rgb_array')
+        env = RecordVideo(env, path)
+        n_states = env.observation_space.n
+        n_actions = env.action_space.n
+        
+        policy_network = DQN(n_states, n_actions, device=self.device)
+        policy_network.load_state_dict(torch.load(r"models\frozen_lake_dqn.pth"))
+        policy_network.eval()
+
+        for episode in range(5):
+            state = env.reset()[0]
+            terminated, truncated = False, False
+            while not terminated and not truncated:
+                with torch.no_grad():
+                    action = policy_network(self.state_to_dqn_input(n_states, state)).argmax().item()
+                state, reward, terminated, truncated, _ = env.step(action)
+        env.close()
+        print("Demo completed.")
