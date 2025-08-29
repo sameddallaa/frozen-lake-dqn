@@ -2,6 +2,7 @@ import torch
 import torch.optim as optim
 import torch.nn as nn
 from dqn import DQN
+import gymnasium as gym
 from replay_memory import ReplayMemory
 import random
 import matplotlib.pyplot as plt
